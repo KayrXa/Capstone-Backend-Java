@@ -1,11 +1,12 @@
-FROM openjdk:jdk-17.0.8+7
+FROM jdk:latest
 
-EXPOSE 8090
-
-ENV APP_HOME /usr/src/main
-
-COPY target/movieplan-0.0.1-SNAPSHOT.jar $APP_HOME/app.jar
+ENV APP_HOME /usr
 
 WORKDIR $APP_HOME
+
+COPY target/movieplan-0.0.1-SNAPSHOT.jar $APP_HOME/app.jar
+COPY movieplan.sql movieplan.sql
+
+EXPOSE 8090
 
 ENTRYPOINT exec java -jar app.jar
