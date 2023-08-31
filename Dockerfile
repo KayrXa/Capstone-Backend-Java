@@ -1,12 +1,11 @@
-FROM jdk:latest
+FROM eclipse-temurin:17-jdk-jammy
 
-ENV APP_HOME /usr
+WORKDIR /app
 
-WORKDIR $APP_HOME
+COPY .mvn/ .mvn
+COPY mvnw pom.xml ./
+RUN ./mvnw dependency:resolve
 
-COPY target/movieplan-0.0.1-SNAPSHOT.jar $APP_HOME/app.jar
-COPY movieplan.sql movieplan.sql
+COPY src ./src
 
-EXPOSE 8090
-
-ENTRYPOINT exec java -jar app.jar
+CMD ["./mvnw", "spring-boot:run"]
